@@ -8,7 +8,7 @@ import datetime
 
 def show_admin_view(user):
     st.title(f"Painel Administrativo - Bem-vindo, {user[4]}")
-    
+    st.markdown("</div>", unsafe_allow_html=True)
     tab1, tab2, tab3 = st.tabs(["Dashboard", "Gerenciar Produtos", "Gerenciar Usuários"])
 
     def render_simple_table(records, columns):
@@ -16,7 +16,7 @@ def show_admin_view(user):
             st.info("Sem registros para exibir.")
             return
 
-        header = "".join(f"<th style='text-align:left; padding:8px; border-bottom:1px solid #ddd;'>{html.escape(str(col))}</th>" for col in columns)
+        header = "".join(f"<th style='text-align:center; padding:8px; border-bottom:1px solid #C9981A;'>{html.escape(str(col))}</th>" for col in columns)
         rows_html = []
         for record in records:
             cells = []
@@ -24,12 +24,12 @@ def show_admin_view(user):
                 value = record.get(col, "")
                 if value is None:
                     value = ""
-                cells.append(f"<td style='padding:8px; border-bottom:1px solid #eee;'>{html.escape(str(value))}</td>")
+                cells.append(f"<td style='padding:8px; border-bottom:1px solid #F3E06A; text-align:center;'>{html.escape(str(value))}</td>")
             rows_html.append("<tr>" + "".join(cells) + "</tr>")
 
         st.markdown(
             f"""
-            <div style="overflow-x:auto; border:1px solid #e5d7b8; border-radius:8px; background:#fffdf4;">
+            <div style="overflow-x:auto; border:1px solid #C9981A; border-radius:8px; background:#FFFFFF;">
                 <table style="width:100%; border-collapse:collapse;">
                     <thead><tr>{header}</tr></thead>
                     <tbody>
@@ -51,7 +51,6 @@ def show_admin_view(user):
             for row in birthday_clients:
                 try:
                     bdate_str = str(row['birth_date'])
-                    # Assume formato YYYY-MM-DD
                     bdate = datetime.datetime.strptime(bdate_str, "%Y-%m-%d").date()
                     if bdate.month == today.month and bdate.day == today.day:
                         birthdays_today.append(row)
@@ -61,8 +60,8 @@ def show_admin_view(user):
             if birthdays_today:
                 st.error(f"🎉 ATENÇÃO: HOJE É ANIVERSÁRIO DE {len(birthdays_today)} CLIENTE(S)!")
                 st.markdown("""
-                <div style="background-color: #ffeebb; padding: 15px; border-radius: 10px; border: 2px solid #ffa500; margin-bottom: 20px;">
-                    <h3 style="color: #d35400; margin-top: 0;">🎂 Oportunidade de Venda!</h3>
+                <div style="background-color: #F3E06A; padding: 15px; border-radius: 10px; border: 2px solid #C9981A; margin-bottom: 20px; text-align: center;">
+                    <h3 style="color: #B57D0A; margin-top: 0;">🎂 Oportunidade de Venda!</h3>
                     <p style="font-size: 16px;">
                         Lembre-se de enviar uma mensagem parabenizando e <b>sugerindo a compra de um presente especial</b> da loja!
                         Ofereça um desconto ou mostre os lançamentos.
@@ -86,9 +85,12 @@ def show_admin_view(user):
         total_sold = sum(int(row.get('quantity') or 0) for row in sales) if sales else 0
         total_revenue = sum(float(row.get('total_value') or 0.0) for row in sales) if sales else 0.0
         
-        col1.metric("Produtos em Estoque", int(total_stock))
-        col2.metric("Produtos Vendidos", int(total_sold))
-        col3.metric("Receita Total", f"R$ {total_revenue:.2f}")
+        with col1:
+            st.metric("Produtos em Estoque", int(total_stock))
+        with col2:
+            st.metric("Produtos Vendidos", int(total_sold))
+        with col3:
+            st.metric("Receita Total", f"R$ {total_revenue:.2f}")
 
         # Nova linha de métricas
         st.subheader("Valores Totais")
@@ -100,14 +102,16 @@ def show_admin_view(user):
             if products else 0.0
         )
         
-        col4.metric("Valor Total em Estoque", f"R$ {total_stock_value:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        with col4:
+            st.metric("Valor Total em Estoque", f"R$ {total_stock_value:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
         
         # Valor total vendido formatado com destaque
         formatted_revenue = f"R$ {total_revenue:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
-        col5.metric("Valor Total Vendido (Receita)", formatted_revenue)
+        with col5:
+            st.metric("Valor Total Vendido (Receita)", formatted_revenue)
         
         st.markdown(f"""
-        <div style="background-color: #d4edda; padding: 10px; border-radius: 5px; color: #155724; font-weight: bold; margin-top: 10px; border: 1px solid #c3e6cb;">
+        <div style="background-color: #F3E06A; padding: 10px; border-radius: 5px; color: #2D2D2D; font-weight: bold; margin-top: 10px; border: 1px solid #C9981A; text-align: center;">
             💰 VALOR TOTAL DOS PRODUTOS VENDIDOS: {formatted_revenue}
         </div>
         """, unsafe_allow_html=True)
@@ -122,16 +126,16 @@ def show_admin_view(user):
                         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                             <span><b>Estoque</b></span><span>{int(total_stock)}</span>
                         </div>
-                        <div style="background:#F0E6D6; border-radius:999px; overflow:hidden; height:16px;">
-                            <div style="width:{(total_stock / max_value) * 100:.2f}%; height:100%; background:#800020;"></div>
+                        <div style="background:#F3E06A; border-radius:999px; overflow:hidden; height:16px;">
+                            <div style="width:{(total_stock / max_value) * 100:.2f}%; height:100%; background:#EBCB34;"></div>
                         </div>
                     </div>
                     <div>
                         <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                             <span><b>Vendidos</b></span><span>{int(total_sold)}</span>
                         </div>
-                        <div style="background:#F0E6D6; border-radius:999px; overflow:hidden; height:16px;">
-                            <div style="width:{(total_sold / max_value) * 100:.2f}%; height:100%; background:#36454F;"></div>
+                        <div style="background:#F3E06A; border-radius:999px; overflow:hidden; height:16px;">
+                            <div style="width:{(total_sold / max_value) * 100:.2f}%; height:100%; background:#B57D0A;"></div>
                         </div>
                     </div>
                 </div>
@@ -152,7 +156,7 @@ def show_admin_view(user):
         # Dashboard Product Grid (Simplified view, maybe allow sale)
         if products:
             # Area de Pesquisa no Dashboard
-            search_term = st.text_input("🔍 Pesquisar Produto", placeholder="Nome, Marca, Estilo ou Tipo...", key="dash_search")
+            search_term = st.text_input("🔍 Pesquisar Produto", placeholder="Nome, Marca, Estilo ou Tipo...", key="dash_search", label_visibility="visible")
             
             if search_term:
                 products = utils.filter_products(products, search_term)
@@ -249,8 +253,6 @@ def show_admin_view(user):
                     
         st.subheader("Usuários Existentes")
         conn = db.get_connection()
-        # Update query to show new fields if needed, but dataframe might get too wide. 
-        # Keeping it simple or maybe showing email/phone.
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute("SELECT id, username, role, name, email, phone FROM users")

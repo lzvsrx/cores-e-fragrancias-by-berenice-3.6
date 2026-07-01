@@ -3,7 +3,7 @@ fileWatcherType = "poll"
 headless = true
 
 [theme]
-primaryColor = "#800020"
-backgroundColor = "#FFFFE0"
-secondaryBackgroundColor = "#F0F2F6"
-textColor = "#36454F"
+primaryColor = "#EBCB34"
+backgroundColor = "#E9E9E9"
+secondaryBackgroundColor = "#F3E06A"
+textColor = "#2D2D2D"

@@ -25,8 +25,8 @@ def show_employee_view(user):
         if birthdays_today:
             st.error(f"🎉 ATENÇÃO: HOJE É ANIVERSÁRIO DE {len(birthdays_today)} CLIENTE(S)!")
             st.markdown("""
-            <div style="background-color: #ffeebb; padding: 15px; border-radius: 10px; border: 2px solid #ffa500; margin-bottom: 20px;">
-                <h3 style="color: #d35400; margin-top: 0;">🎂 Oportunidade de Venda!</h3>
+            <div style="background-color: #F3E06A; padding: 15px; border-radius: 10px; border: 2px solid #C9981A; margin-bottom: 20px; text-align: center;">
+                <h3 style="color: #B57D0A; margin-top: 0;">🎂 Oportunidade de Venda!</h3>
                 <p style="font-size: 16px;">
                     Lembre-se de enviar uma mensagem parabenizando e <b>sugerindo a compra de um presente especial</b> da loja!
                 </p>
@@ -46,14 +46,14 @@ def show_employee_view(user):
         
         products = db.get_products()
         if products:
-            search_term = st.text_input("Buscar no PDV", placeholder="Digite nome, marca, tipo, id...")
+            search_term = st.text_input("Buscar no PDV", placeholder="Digite nome, marca, tipo, id...", label_visibility="visible")
             if search_term:
                 products = utils.filter_products(products, search_term)
 
             product_options = {f"{row['id']} - {row['name']} (Estoque: {row['quantity']})": row['id'] for row in products if int(row.get('quantity') or 0) > 0}
             
             if product_options:
-                selected_option = st.selectbox("Selecione o Produto", list(product_options.keys()))
+                selected_option = st.selectbox("Selecione o Produto", list(product_options.keys()), label_visibility="visible")
                 selected_id = product_options[selected_option]
                 
                 prod = db.get_product_by_id(selected_id)
@@ -70,7 +70,7 @@ def show_employee_view(user):
                     st.write(f"**Preço Unitário:** R$ {prod[5]:.2f}")
                     
                     max_qty = int(prod[6])
-                    qty_sell = st.number_input("Quantidade", min_value=1, max_value=max_qty, step=1)
+                    qty_sell = st.number_input("Quantidade", min_value=1, max_value=max_qty, step=1, label_visibility="visible")
                     
                     total = qty_sell * prod[5]
                     st.write(f"### Total a Pagar: R$ {total:.2f}")

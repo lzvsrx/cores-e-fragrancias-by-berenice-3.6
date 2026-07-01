@@ -44,12 +44,10 @@ TIPOS = [
 ]
 
 # Paleta de Cores
-COLOR_BG = "#FFFFE0"
-COLOR_TEXT_SMALL = "#36454F"
-COLOR_TEXT_LARGE_1 = "#800020"
-COLOR_TEXT_LARGE_2 = "#36454F"
-
-import os
+COLOR_BG = "#E9E9E9"
+COLOR_TEXT_SMALL = "#2D2D2D"
+COLOR_TEXT_LARGE_1 = "#B57D0A"
+COLOR_TEXT_LARGE_2 = "#2D2D2D"
 
 
 def get_product_image_source(product_row):
@@ -78,23 +76,39 @@ def ensure_directories():
 def apply_custom_css():
     st.markdown("""
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
         html, body, .stApp {
-            background-color: #FFFFE0 !important;
+            background-color: #E9E9E9 !important;
         }
-        .stApp, .stApp p, .stApp span, .stApp div {
-            color: #36454F;
+        .stApp, .stApp p, .stApp span, .stApp div, .stApp input, .stApp textarea, .stApp select {
+            font-family: 'Playfair Display', serif;
+            color: #2D2D2D;
         }
 
         h1, h2, h3, h4, h5, h6, strong, b, .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
-            color: #800020;
+            font-family: 'Playfair Display', serif;
+            color: #B57D0A;
+            text-align: center;
+        }
+
+        .stMarkdown, .stText, .stMetric {
+            text-align: center;
+        }
+
+        .stButton>button,
+        div[data-testid="baseButton-secondary"] button {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .st-emotion-cache-hzygls,
         .st-emotion-cache-4man113,
         div[data-testid="stStatusContainer"],
         div[data-testid="stCacheContainer"] {
-            background-color: #FFFACD !important;
-            color: #36454F !important;
+            background-color: #F3E06A !important;
+            color: #2D2D2D !important;
             padding: 5px;
             border-radius: 3px;
         }
@@ -105,26 +119,26 @@ def apply_custom_css():
         }
 
         ::-webkit-scrollbar-track {
-            background: #FFFACD; /* Amarelo-claro Pálido (OPACO) */
+            background: #F3E06A; /* Amarelo-suave */
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #800020; /* Vermelho-vinho (OPACO) */
+            background: #C9981A; /* Dourado */
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #FFFACD; /* Amarelo-claro Pálido (OPACO) */
+            background: #B57D0A; /* Dourado escuro */
         }
 
         * {
-            scrollbar-color: #800020 #FFFACD;
+            scrollbar-color: #C9981A #F3E06A;
             scrollbar-width: thin;
         }
 
         *::-moz-scrollbar-thumb:hover {
-            background: #FFFACD; /* Amarelo-claro Pálido no hover do Thumb (OPACO) */
+            background: #B57D0A;
         }
 
         header,
@@ -132,76 +146,65 @@ def apply_custom_css():
         header.st-emotion-cache-1rq341t,
         header.st-emotion-cache-1l02z8d,
         div[data-testid="stHeader"] {
-            background-color: #FFFFE0 !important;
+            background-color: #F3E06A !important;
         }
 
-        /* RODAPÉ (Footer) */
         footer,
         div[data-testid="stFooter"] {
-            background-color: #FFFFE0 !important;
-            color: #36454F !important;
+            background-color: #F3E06A !important;
+            color: #2D2D2D !important;
         }
         footer a,
         div[data-testid="stFooter"] a {
-            color: #800020 !important;
+            color: #C9981A !important;
         }
 
-        /* SIDEBAR (Barra de Navegação) */
         .stSidebar,
         .stSidebar > div:first-child,
         div[data-testid="stSidebar"] {
-            background-color: #FFFFE0 !important;
+            background-color: #F3E06A !important;
         }
         .stSidebar .stMarkdown, .stSidebar .stSelectbox label,
         .stSidebar p, .stSidebar span {
-            color: #36454F !important;
+            color: #2D2D2D !important;
         }
 
-        /* LINKS DE NAVEGAÇÃO NA BARRA LATERAL */
         .stSidebar nav ul li a, .stSidebar nav ul li div[role="button"],
         div[data-testid="stVerticalNav"] li a {
-            background-color: #FFFFE0 !important;
-            color: #36454F !important;
+            background-color: #FFFFFF !important;
+            color: #2D2D2D !important;
         }
         .stSidebar nav ul li a:hover, .stSidebar nav ul li div[role="button"]:hover,
         div[data-testid="stVerticalNav"] li a:hover {
-            background-color: #FFFACD !important;
-            color: #800020 !important;
+            background-color: #EBCB34 !important;
+            color: #FFFFFF !important;
         }
         .stSidebar nav ul li a[aria-current="page"], .stSidebar nav ul li div[aria-selected="true"],
         div[data-testid="stVerticalNav"] li a[aria-current="page"] {
-            background-color: #FFFACD !important;
-            color: #800020 !important;
+            background-color: #EBCB34 !important;
+            color: #FFFFFF !important;
             font-weight: bold;
         }
 
-        /* Menu Principal (Menu Hambúrguer) */
         div[data-testid="stMainMenu"] {
-            background-color: #FFFFE0 !important;
+            background-color: #F3E06A !important;
         }
         div[data-testid="stMainMenu"] button, div[data-testid="stMainMenu"] div {
-            color: #36454F !important;
-            background-color: #FFFFE0 !important;
+            color: #2D2D2D !important;
+            background-color: #F3E06A !important;
         }
         div[data-testid="stMainMenu"] button:hover, div[data-testid="stMainMenu"] div:hover {
-            background-color: #FFFACD !important;
-            color: #800020 !important;
+            background-color: #EBCB34 !important;
+            color: #FFFFFF !important;
         }
 
-
-        /* ------------------------------------------------------------------ */
-        /* FORMULÁRIOS E INPUTS */
-        /* ------------------------------------------------------------------ */
-
-        /* FORMULÁRIOS (st.form) */
         .stForm {
-            background-color: #FFFFE0;
-            border: 1px solid #FFFACD;
+            background-color: #FFFFFF;
+            border: 1px solid #C9981A;
             padding: 10px;
             border-radius: 5px;
         }
 
-        /* INPUTS DE TEXTO GERAIS (Cobre: st.text_input, st.number_input, st.date_input, st.text_area, st.selectbox) */
         .stTextInput>div>div>input,
         .stNumberInput>div>div>input,
         .stDateInput>div>div>input,
@@ -209,9 +212,9 @@ def apply_custom_css():
         .stSelectbox div[data-baseweb="select"] div[role="button"],
         .stTextInput input, .stNumberInput input, .stDateInput input, .stTextArea textarea,
         div[data-testid="stSelectbox"] div[role="button"] {
-            background-color: #FFFACD !important; /* Amarelo-claro Pálido */
-            color: #36454F !important;
-            border-color: #800020 !important;
+            background-color: #FFFFFF !important;
+            color: #2D2D2D !important;
+            border-color: #C9981A !important;
             
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -220,61 +223,60 @@ def apply_custom_css():
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Foco nos Inputs - Suporte Cross-Browser para Focus Ring! */
         .stTextInput>div>div>input:focus,
         .stNumberInput>div>div>input:focus,
         .stDateInput>div>div>input:focus,
         .stTextArea>div>div>textarea:focus,
         .stTextInput input:focus, .stNumberInput input:focus, .stDateInput input:focus, .stTextArea textarea:focus {
-            border-color: #800020 !important;
+            border-color: #B57D0A !important;
             
-            -webkit-box-shadow: 0 0 0 1px #800020 !important;
-            -moz-box-shadow: 0 0 0 1px #800020 !important;
-            box-shadow: 0 0 0 1px #800020 !important;
+            -webkit-box-shadow: 0 0 0 1px #B57D0A !important;
+            -moz-box-shadow: 0 0 0 1px #B57D0A !important;
+            box-shadow: 0 0 0 1px #B57D0A !important;
             
             outline: none !important;
         }
 
-        /* CHAT INPUT (st.chat_input) */
         .stChatInputContainer,
         div[data-testid="stChatInput"] {
-            background-color: #FFFFE0 !important;
-            border-top: 1px solid #FFFACD;
+            background-color: #F3E06A !important;
+            border-top: 1px solid #C9981A;
             padding: 10px 0;
         }
         .stChatInputContainer input,
         div[data-testid="stChatInput"] input {
-            background-color: #FFFACD !important;
-            color: #36454F !important;
-            border-color: #800020 !important;
+            background-color: #FFFFFF !important;
+            color: #2D2D2D !important;
+            border-color: #C9981A !important;
         }
         .stChatInputContainer button svg,
         div[data-testid="stChatInput"] button svg {
-            fill: #800020 !important;
+            fill: #B57D0A !important;
         }
         .stChatInputContainer button,
         div[data-testid="stChatInput"] button {
-            background-color: #FFFACD !important;
-            border-color: #800020 !important;
+            background-color: #F3E06A !important;
+            border-color: #C9981A !important;
         }
         .stChatInputContainer button:hover,
         div[data-testid="stChatInput"] button:hover {
-            background-color: #FFFFE0 !important;
+            background-color: #EBCB34 !important;
         }
+
         .stButton>button,
         div[data-testid="baseButton-secondary"] button {
-            background-color: #FFFACD;
-            color: #800020;
-            border-color: #800020;
+            background-color: #EBCB34;
+            color: #FFFFFF;
+            border-color: #B57D0A;
             
             -webkit-transition: all 0.2s ease-in-out;
             transition: all 0.2s ease-in-out;
         }
         .stButton>button:hover,
         div[data-testid="baseButton-secondary"] button:hover {
-            background-color: #800020 !important;
-            color: #FFFACD !important;
-            border-color: #800020 !important;
+            background-color: #B57D0A !important;
+            color: #FFFFFF !important;
+            border-color: #B57D0A !important;
         }
         </style>
     """, unsafe_allow_html=True)

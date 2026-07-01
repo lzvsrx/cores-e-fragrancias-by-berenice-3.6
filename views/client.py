@@ -36,13 +36,13 @@ def show_client_view(user):
                             else:
                                 st.markdown("*Sem Imagem*")
 
-                            st.subheader(row['name'])
-                            st.caption(f"{row['brand']} | {row['style']} | {row['type']}")
-                            st.markdown(f"#### R$ {row['price']:.2f}")
+                            st.subheader(f"<div style='text-align: center;'>{row['name']}</div>", unsafe_allow_html=True)
+                            st.caption(f"<div style='text-align: center;'>{row['brand']} | {row['style']} | {row['type']}</div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='text-align: center;'>#### R$ {row['price']:.2f}</div>", unsafe_allow_html=True)
 
                             if row['quantity'] > 0:
-                                st.success(f"Disponível ({row['quantity']})")
+                                st.success(f"<div style='text-align: center;'>Disponível ({row['quantity']})</div>", unsafe_allow_html=True)
                             else:
-                                st.error("Esgotado")
+                                st.error("<div style='text-align: center;'>Esgotado</div>", unsafe_allow_html=True)
     else:
         st.info("Nenhum produto disponível no momento.")

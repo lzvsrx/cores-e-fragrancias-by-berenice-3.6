@@ -29,20 +29,14 @@ if 'user' not in st.session_state:
     st.session_state['user'] = None
 
 def show_logo():
-    try:
-        st.image("assets/logo.png", width=200)
-    except:
-        pass
+    st.image("assets/logo1.jpeg", width=200)
 
 def login():
     col_l1, col_l2, col_l3 = st.columns([1,1,1])
     with col_l2:
-        try:
-            st.image("assets/logo.png", width=120)
-        except:
-            pass
-            
-    st.markdown("<h1 style='text-align: center;'>Login - Cores & Fragrâncias</h1>", unsafe_allow_html=True)
+        st.image("assets/logo1.jpeg", width=120, use_container_width=False)
+
+    st.markdown('<h1 style="text-align: center; font-family: \'Great Vibes\', cursive; font-size: 3.5rem;">Login - Cores & Fragrâncias</h1>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
@@ -58,8 +52,8 @@ def login():
                     st.rerun()
                 else:
                     st.error("Usuário ou senha incorretos.")
-        
-        st.info("Admin padrão: admin / admin123")
+    
+    st.info("Admin padrão: admin / admin123")
 
 def main():
     if not st.session_state['user']:
@@ -72,10 +66,7 @@ def main():
         with st.sidebar:
             col_s1, col_s2 = st.columns([1, 2])
             with col_s1:
-                try:
-                    st.image("assets/logo.png", width=80)
-                except:
-                    pass
+                st.image("assets/logo1.jpeg", width=80)
             with col_s2:
                 st.markdown("## Menu")
             

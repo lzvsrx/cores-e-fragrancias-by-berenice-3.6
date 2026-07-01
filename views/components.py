@@ -11,20 +11,24 @@ def render_product_management():
     # Add Product Form
     with st.expander("Adicionar Novo Produto"):
         with st.form("add_product_form_comp"):
-            name = st.text_input("Nome do Produto")
-            col_a, col_b = st.columns(2)
-            brand = col_a.selectbox("Marca", utils.MARCAS)
-            style = col_b.selectbox("Estilo", utils.ESTILOS)
-            type_ = st.selectbox("Tipo", utils.TIPOS)
+            col_m1, col_m2, col_m3 = st.columns([1,1,1])
+            with col_m1:
+                name = st.text_input("Nome do Produto")
+            with col_m2:
+                brand = st.selectbox("Marca", utils.MARCAS)
+            with col_m3:
+                style = st.selectbox("Estilo", utils.ESTILOS)
+            type_ = st.selectbox("Tipo", utils.TIPOS, label_visibility="visible")
             
             col_c, col_d, col_e = st.columns(3)
-            price = col_c.number_input("Preço (R$)", min_value=0.01, format="%.2f")
-            quantity = col_d.number_input("Quantidade", min_value=1, step=1)
-            exp_date = col_e.date_input("Data de Vencimento")
+            price = col_c.number_input("Preço (R$)", min_value=0.01, format="%.2f", label_visibility="visible")
+            quantity = col_d.number_input("Quantidade", min_value=1, step=1, label_visibility="visible")
+            exp_date = col_e.date_input("Data de Vencimento", label_visibility="visible")
             
-            image = st.file_uploader("Imagem do Produto", type=['png', 'jpg', 'jpeg'])
-            
-            submitted = st.form_submit_button("Cadastrar Produto")
+            image = st.file_uploader("Imagem do Produto", type=['png', 'jpg', 'jpeg'], label_visibility="visible")
+            c1, c2, c3 = st.columns([1,2,1])
+            with c2:
+                submitted = st.form_submit_button("Cadastrar Produto")
             if submitted:
                 # Validação de Erros
                 errors = []
